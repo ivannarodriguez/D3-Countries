@@ -9,28 +9,37 @@ let countries = [
     {"Country":"Nigeria","Code":"NGR","LandArea":910770,"Population":151.212,"Energy":111156,"Rural":51.6,"Military":10.8,"Health":6.4,"HIV":3.6,"Internet":15.9,"Developed":1,"BirthRate":39.8,"ElderlyPop":3.1,"LifeExpectancy":47.9,"CO2":0.6356,"GDP":1222.4773,"Cell":55.1042,"Electricity":120.5077,"kwhPerCap":"Under 2500"},
     {"Country":"Pakistan","Code":"PAK","LandArea":770880,"Population":166.111,"Energy":82839,"Rural":63.8,"Military":18,"Health":3.1,"HIV":0.1,"Internet":11.1,"Developed":1,"BirthRate":30.1,"ElderlyPop":4,"LifeExpectancy":66.5,"CO2":0.9745,"GDP":1018.8728,"Cell":59.2058,"Electricity":449.3228,"kwhPerCap":"Under 2500"},
     {"Country":"Russian Federation","Code":"RUS","LandArea":16376870,"Population":141.95,"Energy":686757,"Rural":27.2,"Military":16.3,"Health":9.2,"HIV":1,"Internet":32,"Developed":3,"BirthRate":12.1,"ElderlyPop":13.3,"LifeExpectancy":67.8,"CO2":12.037,"GDP":10439.6424,"Cell":167.682,"Electricity":6135.5728,"kwhPerCap":"Over 5000"},
-    {"Country":"United States","Code":"USA","LandArea":9147420,"Population":304.375,"Energy":2283722,"Rural":18.3,"Military":18.6,"Health":18.7,"HIV":0.6,"Internet":75.8,"Developed":3,"BirthRate":14.3,"ElderlyPop":12.6,"LifeExpectancy":78.4,"CO2":17.9417,"GDP":47198.5045,"Cell":90.2441,"Electricity":12903.8067,"kwhPerCap":"Over 5000"}] 
+    {"Country":"United States","Code":"USA","LandArea":9147420,"Population":304.375,"Energy":2283722,"Rural":18.3,"Military":18.6,"Health":18.7,"HIV":0.6,"Internet":75.8,"Developed":3,"BirthRate":14.3,"ElderlyPop":12.6,"LifeExpectancy":78.4,"CO2":17.9417,"GDP":47198.5045,"Cell":90.2441,"Electricity":12903.8067,"kwhPerCap":"Over 5000"}]
 
+//sort function declared explicitly
+  // function compare(a, b){
+  //   return b.LandArea - a.LandArea;
+  // }
+
+  let compare = (a,b) => b.LandArea-a.LandArea
+//Population Graph
     //Create rectangles for bar charts
     d3.selectAll('svg#big-countries')
     .selectAll('rect')
-    .data(countries)
-    .enter()
-    .append('rect')
-    .attr('x', 150) //start in top left corner
-    .attr('y', (d, i) => i*20) //gap between bars (5 pixels 20)
-    .attr('height', 15) // size of the bars
-    .attr('width', d => (d.Population / 1500) * 400) //d.population chooses the population of the country (x axis)
-    .style('fill', 'red');
-
+    .data(countries.sort(compare))
+      .enter()
+      .append('rect')
+        .transition()
+        .duration(2000)
+        .attr('x', 150) //start in top left corner
+        .attr('y', (d, i) => i*20) //gap between bars (5 pixels 20)
+        .attr('height', 15) // size of the bars
+        .attr('width', d => (d.LandArea / 9500000) * 400) //d.population chooses the population of the country (x axis) - changed to landArea
+        .style('fill', 'thistle');
     //Add country labels
     d3.selectAll('svg#big-countries')
     .selectAll('text')
-    .data(countries)
-    .enter()
-    .append('text')
-    .attr('x', 0) //start in top left corner
-    .attr('y', (d, i) => i*20) //gap between bars
-    .text( d => d.Country)
-    .attr("dy", ".80em")
-    .attr("font-size", "18px");
+    .data(countries.sort(compare))
+      .enter()
+      .append('text')
+        .attr('x', 0) //start in top left corner
+        .attr('y', (d, i) => i*20) //gap between bars
+        .text( d => d.Country)
+        .attr("dy", ".80em")
+        .attr("font-size", "18px");
+    //sort bars

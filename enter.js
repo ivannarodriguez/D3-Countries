@@ -16,7 +16,7 @@ let countries = [
   //   return b.LandArea - a.LandArea;
   // }
 
-  let compare = (a,b) => b.LandArea-a.LandArea
+  let compare = (a,b) => b.Population-a.Population
 //Population Graph
     //Create rectangles for bar charts
     d3.selectAll('svg#big-countries')
@@ -29,7 +29,7 @@ let countries = [
         .attr('x', 150) //start in top left corner
         .attr('y', (d, i) => i*20) //gap between bars (5 pixels 20)
         .attr('height', 15) // size of the bars
-        .attr('width', d => (d.LandArea / 9500000) * 400) //d.population chooses the population of the country (x axis) - changed to landArea
+        .attr('width', d => (d.Population / 1500) * 400) //d.population chooses the population of the country (x axis) - changed to landArea
         .style('fill', 'thistle');
     //Add country labels
     d3.selectAll('svg#big-countries')
